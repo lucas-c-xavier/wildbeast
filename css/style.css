@@ -1,3 +1,4 @@
+/* Reseta o padding e margin para elementos principais */
 body,
 p,
 h1,
@@ -8,49 +9,368 @@ blockquote {
   margin: 0px;
 }
 
+/* Remove o estilo de lista nos itens */
 li {
   list-style: none;
 }
 
+/* Remove o sublinhado dos links */
 a {
   text-decoration: none;
 }
 
+/* Define as imagens para ocuparem 100% da largura, removendo espaçamento e bordas arredondadas */
+img {
+  width: 100%;
+  display: block;
+  border-radius: 5px;
+}
+
+/* Define a fonte do body */
 body {
   font-family: "Volkhov", Georgia, "Times New Roman", Times, serif;
 }
 
-img {
-  max-width: 100px;
-}
-
-/* Grid Geral */
-
+/* Grid geral para o layout */
 .estrutura {
   display: grid;
-  grid-template-columns: minmax(160px, 1fr) 3fr 300px;
+  grid-template-columns: minmax(160px, 1fr) 3fr 300px; /* Define o layout das colunas */
   grid-template-areas:
     "header header header"
     "sidenav content anuncios"
-    "footer footer footer";
+    "footer footer footer"; /* Define as áreas do grid */
 }
 
+/* Responsividade para telas maiores que 1200px */
+@media (max-width: 1200px) {
+  .estrutura {
+    grid-template-areas:
+      "header header header"
+      "sidenav content content"
+      "sidenav anuncios anuncios"
+      "footer footer footer"; /* Modifica o layout em telas menores */
+  }
+}
+
+/* Responsividade para telas menores que 760px */
+@media (max-width: 760px) {
+  .estrutura {
+    grid-template-columns: 100%; /* Coloca as colunas em 1 coluna */
+    grid-template-areas:
+      "header"
+      "sidenav"
+      "content"
+      "anuncios"
+      "footer"; /* Ajusta a estrutura do grid */
+  }
+}
+
+/* Estilo do header (cabeçalho) */
 .header {
   grid-area: header;
+  background: linear-gradient(
+    135deg,
+    #8844ee,
+    #b08dfb
+  ); /* Gradiente no fundo */
+  padding: 30px;
+  display: flex; /* Flexbox ativado */
+  justify-content: space-between; /* Itens distribuídos com espaço */
+  align-items: center; /* Alinha itens no centro verticalmente */
 }
 
+/* Logo com tamanho máximo definido */
+.logo {
+  max-width: 200px;
+  margin: 0;
+  padding: 0;
+  align-self: start; /* Alinha ao topo */
+}
+
+/* Navegação no header usando Flexbox */
+.header nav ul {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Estilo dos links de navegação */
+.header nav a {
+  display: block;
+  padding: 10px;
+  color: white;
+  font-size: 1.125rem;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  transition: 0.1s; /* Efeito suave no hover */
+}
+
+/* Efeito de hover nos links */
+.header nav a:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* Espaçamento entre os itens da lista */
+.header li + li {
+  margin-left: 30px;
+}
+
+/* Responsividade para o header em telas menores que 760px */
+@media (max-width: 760px) {
+  .header {
+    grid-template-columns: auto;
+  }
+  .logo {
+    margin-bottom: 20px;
+  }
+  .header nav a {
+    font-size: 1rem;
+  }
+  .header li + li {
+    margin-left: 10px;
+  }
+}
+
+/* Estilo do Sidenav (barra lateral) */
 .sidenav {
   grid-area: sidenav;
+  background: #fafbfc;
+  padding: 30px;
 }
 
+/* Estilo dos links no sidenav */
+.sidenav li a {
+  display: block;
+  min-width: 60px;
+  max-width: 100px;
+  margin: 0 auto 30px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 5px 5px 10px 0px rgba(44, 44, 44, 0.15); /* Sombra nos links */
+  transition: 0.1s ease-out;
+}
+
+/* Efeito de hover nos links do sidenav */
+.sidenav li a:hover {
+  background: #b08dfb;
+}
+
+/* Animação da seta */
+@keyframes seta {
+  from {
+    right: 30px;
+  }
+  to {
+    right: 20px;
+  }
+}
+
+/* Responsividade para o sidenav em telas menores que 760px */
+@media (max-width: 760px) {
+  .sidenav {
+    position: relative;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    -ms-overflow-style: -ms-autohiding-scrollbar;
+  }
+  .sidenav::after {
+    content: "→"; /* Adiciona uma seta */
+    position: absolute;
+    top: 5px;
+    height: 30px;
+    color: rgba(0, 0, 0, 0.3);
+    animation: seta 0.5s ease-in 0s infinite alternate;
+  }
+  .sidenav ul {
+    display: flex;
+  }
+  .sidenav ul li {
+    flex: 1 0 60px;
+  }
+  .sidenav {
+    padding: 0 30px;
+  }
+  .sidenav li a {
+    margin: 30px 30px 30px 0;
+  }
+}
+
+/* Estilo do conteúdo principal */
 .content {
   grid-area: content;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 30px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px;
 }
 
+/* Responsividade para o conteúdo em telas menores que 600px */
+@media (max-width: 600px) {
+  .content {
+    grid-template-columns: auto; /* Coloca tudo em uma coluna */
+  }
+}
+
+/* Classe para colunas mais largas */
+.col-wide {
+  grid-column: 1 / -1;
+}
+
+/* Imagem maior ocupando 2 linhas */
+.imagem-1 {
+  grid-row: span 2;
+  align-self: end;
+}
+
+/* Estilo para a imagem que ocupa toda a largura */
+.img-3 {
+  grid-column: 1 / -1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Alinhamento do item 2 */
+.item-2 {
+  align-self: end;
+}
+
+/* Estilo dos parágrafos */
+p {
+  font-size: 1.2rem;
+  line-height: 1.6;
+  letter-spacing: -0.005rem;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+/* Estilo para o título */
+.titulo {
+  color: #b08dfb;
+}
+
+.titulo h1 {
+  font-size: 3.75rem;
+  line-height: 1;
+  font-weight: 700;
+}
+
+/* Estilo do subtítulo */
+.titulo span {
+  font-size: 0.875rem;
+  font-style: italic;
+}
+
+/* Estilo das características */
+.caracteristicas {
+  display: flex;
+  align-items: flex-start;
+}
+
+.caracteristicas > div {
+  width: 80px;
+  text-align: center;
+  background: linear-gradient(135deg, #8844ee, #b08dfb);
+  border-radius: 5px;
+  box-shadow: 5px 5px 10px 0px rgba(44, 44, 44, 0.15);
+  position: relative;
+}
+
+.caracteristicas > div:first-child {
+  margin-right: 30px;
+}
+
+/* Estilo dos números das características */
+.caracteristicas span {
+  display: block;
+  color: #b08dfb;
+}
+
+/* Estilo do número */
+.numero {
+  color: #b08dfb;
+  font-size: 3rem;
+  line-height: 1;
+  margin: 10px auto;
+}
+
+/* Estilo do rótulo */
+.rotulo {
+  background: white;
+  border-radius: 0 0 5px 5px;
+  padding: 5px 0;
+  position: relative;
+  top: 2px;
+}
+
+/* Estilo de destaque */
+.destaque {
+  font-size: 0.875rem;
+  color: #b08dfb;
+  max-width: 16rem;
+}
+
+/* Estilo da citação */
+.citacao,
+.atributos {
+  padding: 30px;
+  border-radius: 5px;
+  box-shadow: 5px 5px 15px 0px rgba(44, 44, 44, 0.15);
+  background: linear-gradient(135deg, #8844ee, #b08dfb);
+  align-self: start;
+}
+
+.citacao p {
+  font-size: 1.5rem;
+  font-style: italic;
+  text-align: center;
+  max-width: 500px;
+  margin: 0 auto;
+  color: white;
+}
+
+/* Estilo dos itens na lista de atributos */
+.atributos li {
+  color: white;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 1.12rem;
+  padding: 15px;
+}
+
+/* Separador entre os itens da lista */
+.atributos li + li {
+  border-top: 2px solid #b08dfb;
+}
+
+/* Estilo das informações */
+.informacoes p + p {
+  margin-top: 30px;
+}
+
+/* Estilo dos anúncios */
 .anuncios {
   grid-area: anuncios;
+  background: #fafbfc;
+  display: grid;
+  align-content: start;
+  padding: 30px;
+  gap: 30px;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(150px, 1fr)
+  ); /* Cria colunas automáticas */
 }
 
+/* Estilo do footer */
 .footer {
   grid-area: footer;
+  background: linear-gradient(135deg, #8844ee, #b08dfb);
+}
+
+/* Estilo do texto no footer */
+.footer p {
+  color: white;
+  text-align: center;
+  padding: 30px;
 }
